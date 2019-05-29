@@ -31,10 +31,6 @@ async function onGet(req, res) {
     console.log(json);
   }
   res.json(array);
-
-
-
-
 }
 app.get('/api', onGet);
 
@@ -121,11 +117,11 @@ async function onDelete(req, res) {
     for (let j = 0; j < rows[i].length; j++) {
       if (rows[i][j] == value) {
         sheet.deleteRow(i);
-        res.json({ "response": "success" });
         break;
       }
     }
   }
+  res.json({ "response": "success" });
 }
 app.delete('/api/:column/:value', onDelete);
 
