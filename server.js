@@ -42,20 +42,26 @@ async function onPost(req, res) {
   const messageBody = req.body;
   const idList = Object.keys(messageBody);
   var nameList = Object.values(messageBody);
+  var newrow = [];
   const result = await sheet.getRows();
+  const rows = result.rows;
   console.log(idList);
   console.log(nameList);
-  if (idList[0] == "name" && idList[1] == "email") {
-    sheet.appendRow(nameList);
-    res.json("success");
+  if (idList.length == rows[0].length) {
+    for (var i = 0; i < rows.length; i++) {
+      for (var j = 0; j < rows[0].length; j++) {
+        if (idList[j] == rows[0][i]) {
+          newrow[i] = nameList[j];
+        }
+      }
+    }
+    res.json({ "response": "success" });
   }
-  else if (idList[1] == "name" && idList[0] == "email") {
-    let tmp = nameList[1];
-    nameList[1] = nameList[0];
-    nameList[0] = tmp;
-    sheet.appendRow(nameList);
-    res.json("success");
+  else{
+    res.json({ "response": "success" });
   }
+  sheet.appendRow(newrow);
+  console.log(newrow);
 
 }
 app.post('/api', jsonParser, onPost);
@@ -68,40 +74,41 @@ async function onPatch(req, res) {
   var nameList = Object.values(messageBody);
   const result = await sheet.getRows();
   const rows = result.rows;
-  var response={};
-  var newrow=[];
+  var json = {};
+  var newrow = [];
+  var index=0;
 
+  for (let i = 0; i < rows[0].length; i++)
+  {
+    if(column==rows[0][i])
+    {
+      colindex=i;
+      break;
+    }
+  }
   for (let i = 0; i < rows.length; i++) {
-    for (let j = 0; j < rows[i].length; j++) {
-      if (rows[i][j] == value) {
-        if(column=="name")
-        {
-          newrow[0]=rows[i][0];
-          newrow[1]=nameList[0];
-          sheet.setRow(i,newrow);
-          response[idList[0]]=nameList[0];
-          res.json(response);
-          break;
-        }
-        else if(column=="email")
-        {
-          newrow[1]=rows[i][1];
-          newrow[0]=nameList[0];
-          sheet.setRow(i,newrow);
-          response[idList[0]]=nameList[0];
-          res.json(response);
-          break;
-        }
-        else{
-          res.json({ "response": "success" });
-        }
-
+      if (rows[i][colindex] == value) {
+        index=i;
+        break;
+      } 
+  }
+  for (let i = 0; i < rows[0].length; i++) {
+    {
+      newrow[i]=rows[index][i];
+      for (let j=0 ; j< idList.length ; j++)
+      {
+          if(idList[j] == rows[0][i])
+          {
+            newrow[i] = nameList[j];
+            json[rows[0][i]]=nameList[j];
+            break;
+          }
       }
     }
   }
-  // TODO(you): Implement onPatch.
-
-  res.json({ status: 'unimplemented' });
+  res.json(json);
+  sheet.setRow(index,newrow);
+  console.log(newrow);
 }
 app.patch('/api/:column/:value', jsonParser, onPatch);
 
