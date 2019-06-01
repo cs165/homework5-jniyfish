@@ -1,55 +1,88 @@
-<!--
-You should NOT have to modify this file for the assignment!
--->
-
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-    <title>Spreadsheet Tester</title>
-    <link rel="stylesheet" href="css/style.css"/>
-    <script src="js/script.js" defer></script>
-    </script>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <title>CS193x Final Project</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="js/script.js" defer></script>
+  <script src="app.js" defer></script>
+  <script src="class.js" defer></script>
+  <script src="main.js" defer></script>
+</head>
 
-  </head>
+<body>
 
-  <body>
+  <div id="menu">
+    <header>
+      <h1>Address book</h1>
+    </header>
     <section>
-      <h1>Spreadsheet test UI</h1>
-      <fieldset>
-        <form>
-          <p>
-            API Path: <input type="text" id="path-input" value="/api" />
-          </p>
-          <p>
-            Method:
-            <select id="method-input">
-              <option>GET</option>
-              <option>DELETE</option>
-              <option>POST</option>
-              <option>PATCH</option>
-            </select>
-          </p>
-          <p>
-            Body data: <button id="add-button">Add</button>
-            <div id="key-values"></div>
-          </p>
-          <p>
-            Request preview:<br/>
-            <pre id="preview-area" contenteditable readonly></pre>
-          </p>
-          <p>
-            <input type="submit" id="fetch-button" value="Fetch!"/>
-          </p>
-        </form>
-      </fieldset>
-      <section id="results-container" class="hidden">
-        <hr/>
-        <h2>Fetch results:</h2>
-        <pre id="results"></pre>
-      </section>
+      <p>Insert your user name
+then you can check or edit
+your address book</p>
+      <pre>Enter your name :</pre>
+      <input type="text" id="userName" placeholder="Enter your name" value="me"/>
     </section>
-  </body>
+    <form>
+      <input type="submit" value="submit" id="submit" />
+    </form>
+
+  </div>
+
+
+  <div id="main" class="inactive">
+    <article>
+      <header id=user>Your Address Book</header>
+      <section class="gif">
+        <h2>Your Friends's imformation:</h2>
+        <pre id="results"></pre>
+
+      </section>
+
+      <footer id="button">
+
+      </footer>
+    </article>
+  </div>
+
+  <div id="editmenu" class="inactive">
+    <form>
+      <article>
+        <header>
+          <h1>Edit Menu</h1>
+        </header>
+        <section class="gif">
+          <p id=input> </p>
+          <input type="text" id="fake" style="border: 3px #FFAC55 solid" onchange="getText()"/>
+          <h1>Friend List:</h1>
+          <pre id="NameList"></pre>
+          <p class="inactive">
+            Body data: <button id="add-button">Add</button>
+          </p>
+        </section>
+
+        <form>
+            <input type="text"  id="path-input" value="/api" class="inactive"/>
+            <select id="method-input" class="inactive">
+              <option id="GET">GET</option>
+              <option id="DELETE">DELETE</option>
+              <option id="POST">POST</option>
+            </select>
+            <div id="key-values" >
+            </div>
+            <footer id="button">
+                <input type="submit" value="submit" id="submit" style="border: 3px #FFAC55 solid"/>
+              </footer>
+        </form>
+
+
+      </article>
+    </form>
+
+  </div>
+  <!-- TODO(you): Add the HTML necessary to complete your final project. -->
+</body>
+
 </html>
